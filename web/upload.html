@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件大师_电脑传手机</title>
+  <script src="vue.js"></script>
+  <style>
+    /* 清除内外边距 */
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    hr,
+    p,
+    blockquote,
+    /* structural elements 结构元素 */
+    dl,
+    dt,
+    dd,
+    ul,
+    ol,
+    li,
+    /* list elements 列表元素 */
+    pre,
+    /* text formatting elements 文本格式元素 */
+    fieldset,
+    lengend,
+    button,
+    input,
+    textarea,
+    /* form elements 表单元素 */
+    th,
+    td {
+      /* table elements 表格元素 */
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f5f5f5;
+    }
+
+    .bg>.first {
+      width: 88px;
+      height: 88px;
+      margin: 56px auto 16px;
+    }
+
+    .bg>.first>img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .bg>.second {
+      text-align: center;
+      font-size: 24px;
+      font-family: PingFangSC-Semibold, PingFang SC;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      line-height: 30px;
+      margin-bottom: 8px;
+    }
+
+    #wifi {
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.85);
+      line-height: 16px;
+      text-align: center;
+      margin-bottom: 44px;
+    }
+
+    .tel_pc {
+      display: flex;
+      align-items: center;
+      margin-bottom: 43px;
+      justify-content: center;
+    }
+
+    .tel_pc>img {
+      width: 120px;
+      height: 120px;
+    }
+
+    .tel_pc>div {
+      margin: 0 8px;
+    }
+
+    .tel_pc>.center img {
+      width: 40px;
+      height: 40px;
+      display: block;
+    }
+
+    #area {
+      width: 796px;
+      background: #FFFFFF;
+      border-radius: 6px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      margin: 0 auto 50px;
+      padding: 24px 0 24px 24px;
+    }
+
+    #area .first {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 15px;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+      outline: 0;
+    }
+
+    button.add {
+      width: 60px;
+      background: #FFFFFF;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 8px 0;
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      line-height: 22px;
+      margin-right: 15px;
+      opacity: 0.5;
+    }
+
+    button.load {
+      width: 60px;
+      background: #5E9FF2;
+      border-radius: 4px;
+      text-align: center;
+      padding: 9px 0;
+      font-size: 16px;
+      font-weight: 400;
+      color: #FFFFFF;
+      line-height: 22px;
+      border: 0;
+      margin-right: 24px;
+      opacity: 0.5;
+    }
+
+
+    #area .second {
+      display: flex;
+      align-items: center;
+      padding: 14px 25px;
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.3);
+      line-height: 20px;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    #area .third {
+      align-items: center;
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      line-height: 20px;
+      display: flex;
+      padding: 14px 25px;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .toast {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      left: 0;
+      top: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 100;
+    }
+
+    .toast>div {
+      position: absolute;
+      width: 400px;
+      top: -50px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 230px;
+      margin: auto;
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+      box-sizing: border-box;
+    }
+
+    .toast .btn {
+      width: 80px;
+      border: 0;
+      background: #409eff;
+      color: #fff;
+      padding: 8px 0;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+    .toast .cha{
+      position: absolute;
+      font-size: 18px;
+      right: 20px;
+      top: 12px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg" id="app">
+    <div class="toast" v-show="toast">
+      <div>
+        <div class="cha" @click="toast=false">×</div>
+        <div style="padding:20px 20px 10px;font-size: 18px;line-height: 24px;color:#303133">提示</div>
+        <div style="padding:30px 40px 0px;color: rgba(0,0,0,rgba(0, 0, 0, 0.6));font-size: 18px;">上传成功</div>
+        <div style="padding:10px 40px;color: #606266;font-size: 14px;">请前往APP内查看</div>
+        <div style="padding: 30px;margin:0 0 0 260px;">
+          <button class="btn" @click="toast=false">确定</button>
+        </div>
+      </div>
+    </div>
+    <div class="first">
+      <img src="./img/logo@2x.png" alt="">
+    </div>
+    <div class="second">电脑手机互传文件</div>
+    <div id="wifi">当前Wi-Fi：StarLink</div>
+    <div class="tel_pc">
+      <img src="./img/tel@2x.png" alt="">
+      <div class="center">
+        <img src="./img/left@2x.png" alt="">
+        <img src="./img/right@2x.png" alt="">
+      </div>
+      <img src="./img/pc@2x.png" alt="">
+    </div>
+    <div id="area">
+      <div class="first">
+        <div>上传文件</div>
+        <div>
+          <!-- <form action="upload.html" method="post" enctype="multipart/form-data" accept-charset="utf-8"> -->
+          <!-- <input type="file" name="upload1" @change="change" multiple="multiple" id="btn_file" value="xuanz"
+            style="display: none;"> -->
+          <button class="add" type="button" disabled>添加</button>
+          <!-- <input id="submit" type="submit" style="display: none;" value="Submit"> -->
+          <button class="load" type="button" disabled>上传</button>
+          <!-- </form> -->
+        </div>
+      </div>
+      <div class="second">
+        <img style="width: 18px;height: 18px;margin-right:15px;cursor:pointer"
+          :src="checked?'./img/selected.png':'./img/select.png'" alt="">
+        <div style="width:500px">文件名</div>
+        <div style="width:200px">大小</div>
+        <div style="width:100px">进度</div>
+      </div>
+      <div v-if="fileList.length>0" class="third" v-for="(item,index) of fileList" :key="index">
+        <img :src="item.check?'./img/selected.png':'./img/select.png'"
+          style="width: 18px;height: 18px;margin-right:15px;cursor:pointer" alt="">
+        <div style="width:500px">{{item.name}}</div>
+        <div style="width:200px;">{{(item.size/1024).toFixed(2)+' KB'}}</div>
+        <div style="width:100px;" :style="item.check?'color:#5E9FF2':'rgba(0,0,0,.7)'">{{item.check?'成功':'未上传'}}</div>
+      </div>
+      <div v-if="fileList.length==0" style="padding: 18px;text-align:center;color:rgba(0, 0, 0, 0.6)">暂无文件</div>
+    </div>
+  </div>
+</body>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      checked: true,
+      fileList: [],
+      toast:true
+    },
+    mounted() {
+      console.log(window.localStorage.getItem('filename'))
+      let str = window.localStorage.getItem('filename')
+      this.fileList = JSON.parse(str)
+    },
+    destroyed(){
+      window.localStorage.removeItem('filename');
+    }
+  })
+</script>
+
+</html>

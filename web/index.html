@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件大师_电脑传手机</title>
+  <script src="vue.js"></script>
+  <style>
+    body {
+      background-color: #f5f5f5;
+    }
+
+    .bg>.first {
+      width: 88px;
+      height: 88px;
+      margin: 46px auto 16px;
+    }
+
+    .bg>.first>img {
+      width: 88px;
+      height: 88px;
+    }
+
+    .bg>.second {
+      text-align: center;
+      font-size: 24px;
+      font-family: PingFangSC-Semibold, PingFang SC;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      line-height: 30px;
+      margin-bottom: 8px;
+    }
+
+    #wifi {
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.85);
+      line-height: 16px;
+      text-align: center;
+      margin-bottom: 44px;
+    }
+
+    .tel_pc {
+      display: flex;
+      align-items: center;
+      margin-bottom: 43px;
+      justify-content: center;
+    }
+
+    .tel_pc>img {
+      width: 120px;
+      height: 120px;
+    }
+
+    .tel_pc>div {
+      margin: 0 8px;
+    }
+
+    .tel_pc>.center img {
+      width: 40px;
+      height: 40px;
+      display: block;
+    }
+
+    #area {
+      width: 796px;
+      background: #FFFFFF;
+      border-radius: 6px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      margin: 0 auto 50px;
+      padding: 24px 0 24px 24px;
+    }
+
+    #area .first {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 15px;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+      outline: 0;
+    }
+
+    button.add {
+      width: 80px;
+      background: #FFFFFF;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 8px 0;
+      font-size: 15px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      line-height: 22px;
+      margin-right: 15px;
+    }
+
+    button.add:hover {
+      box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    button.add:active {
+      background-color: #fafafa;
+    }
+
+    button.load {
+      width: 80px;
+      background: #5E9FF2;
+      border-radius: 4px;
+      text-align: center;
+      padding: 9px 0;
+      font-size: 15px;
+      font-weight: 400;
+      color: #FFFFFF;
+      line-height: 22px;
+      border: 0;
+      margin-right: 24px;
+    }
+
+    button.load:hover {
+      box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.1);
+
+    }
+
+    button.load:active {
+      opacity: 0.9;
+    }
+
+    #area .second {
+      display: flex;
+      align-items: center;
+      padding: 14px 25px;
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.3);
+      line-height: 20px;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    #area .third {
+      align-items: center;
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      line-height: 20px;
+      display: flex;
+      padding: 14px 25px;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .toast {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      left: 0;
+      top: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 100;
+    }
+
+    .toast>div {
+      position: absolute;
+      width: 400px;
+      top: -50px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 230px;
+      margin: auto;
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+      box-sizing: border-box;
+    }
+
+    .toast .btn {
+      width: 80px;
+      border: 0;
+      background: #409eff;
+      color: #fff;
+      padding: 8px 0;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .toast .cha {
+      position: absolute;
+      font-size: 18px;
+      right: 20px;
+      top: 12px;
+      cursor: pointer;
+    }
+
+    .percent {
+      position: relative;
+      width: 132px;
+      height: 6px;
+      background: #DAE1EA;
+      border-radius: 2px;
+    }
+
+    .percent>div {
+      height: 6px;
+      background: #5E9FF2;
+      border-radius: 2px;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .language {
+      display: flex;
+      list-style: none;
+      line-height: 22px;
+      font-size: 22px;
+      color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      padding: 0;
+      margin: 66px auto 0;
+    }
+
+    .language>li {
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg" id="app">
+    <div class="toast" v-show="toast">
+      <div>
+        <div class="cha" @click="toast=false">×</div>
+        <div style="padding:20px 20px 10px;font-size: 18px;line-height: 24px;color:#303133">
+          {{language==1?'prompt':language==2?'提示':'提示'}}</div>
+        <div style="padding:30px 40px 0px;color: rgba(0,0,0,rgba(0, 0, 0, 0.6));font-size: 18px;">
+          {{language==1?'Upload successfully':language==2?'上传成功':'上傳成功'}}</div>
+        <div style="padding:10px 40px;color: #606266;font-size: 14px;">
+          {{language==1?'Please check in the APP':language==2?'请前往APP内查看':'請前往APP內查看'}}</div>
+        <div style="padding: 30px;margin:0 0 0 260px;">
+          <button class="btn" @click="toast=false">{{language==1?'determine':language==2?'确定':'確定'}}</button>
+        </div>
+      </div>
+    </div>
+    <ul class="language">
+      <li>
+        <span @click="language=1" :style="language==1?'color:#5e9ff2':''"> English</span>
+        <span> / </span>
+      </li>
+      <li>
+        <span @click="language=2" :style="language==2?'color:#5e9ff2':''">
+          简体
+        </span>
+        <span> / </span></li>
+      <li>
+        <span @click="language=3" :style="language==3?'color:#5e9ff2':''">繁體</span><span> / </span>
+      </li>
+      <li>
+        <span @click="language=4" :style="language==4?'color:#5e9ff2':''">Português</span>
+      </li>
+    </ul>
+    <div class="first">
+      <img src="./img/logo@2x.png" alt="">
+    </div>
+    <div class="second">{{language==1?'Transfer files between computers and phones':language==2?'电脑手机互传文件':language==3?'電腦手機互傳文件':'Transferir arquivos entre computadores e telefones'}}
+    </div>
+    <div id="wifi">
+      {{language==1?'Make sure your computer and phone at the same WIFI':language==2?'确保电脑和手机在同一WIFI下':language==3?'確保電腦和手機在同一WIFI下':'Verifique se o computador e telefone celular estão sob a mesma WIFI'}}
+    </div>
+    <div class="tel_pc">
+      <img src="./img/tel@2x.png" alt="">
+      <div class="center">
+        <img src="./img/left@2x.png" alt="">
+        <img src="./img/right@2x.png" alt="">
+      </div>
+      <img src="./img/pc@2x.png" alt="">
+    </div>
+    <div id="area">
+      <div class="first">
+        <div>{{language==1?'upload files':language==2?'上传文件':language==3?'上傳文件':'upload de arquivos'}}</div>
+        <div>
+          <!-- <form action="upload.html" method="post" enctype="multipart/form-data" accept-charset="utf-8"> -->
+          <input type="file" name="upload1" @change="change" multiple="multiple" id="btn_file" value="xuanz"
+            style="display: none;">
+          <button class="add" type="button"
+            @click="F_Open_dialog">{{language==1?'Add to':language==2?'添加':language==3?'添加':'adicionar à'}}</button>
+          <input id="submit" type="submit" style="display: none;" value="Submit">
+          <button class="load" type="button"
+            @click="F_Open_submit">{{language==1?'Upload':language==2?'上传':language==3?'上傳':'Envio'}}</button>
+          <!-- </form> -->
+        </div>
+      </div>
+      <div class="second">
+        <img style="width: 18px;height: 18px;margin-right:15px;cursor:pointer"
+          :src="checked?'./img/selected.png':'./img/select.png'" @click="check" alt="">
+        <div style="width:500px">{{language==1?'file name':language==2?'文件名':language==3?'文件名':'nome do arquivo'}}</div>
+        <div style="width:200px">{{language==1?'size':language==2?'大小':language==3?'大小':'Tamanho'}}</div>
+        <div style="width:132px;padding-left:5px">{{language==1?'progress rate':language==2?'进度':language==3?'進度':'processar'}}</div>
+      </div>
+      <div v-if="fileList.length>0" class="third" v-for="(item,index) of fileList" :key="index">
+        <img :id="'selected'+index" style="width: 18px;height: 18px;margin-right:15px;cursor:pointer"
+          src="./img/selected.png" @click="choose(index,false)" alt="">
+        <img :id="'select'+index" style="width: 18px;height: 18px;margin-right:15px;cursor:pointer;display:none"
+          src="./img/select.png" @click="choose(index,true)" alt="">
+        <div style="width:500px">{{item.name}}</div>
+        <div style="width:200px;">{{(item.size/1024).toFixed(2)+' KB'}}</div>
+        <div class="percent" v-if="percent>0 && percent<100 && arr[index]">
+          <div :style="{width:percent+'%'}"></div>
+        </div>
+        <div v-else style="width:132px;color:#5E9FF2">
+          <span v-if="language==1">{{send&&arr[index]?'success':'To be uploaded'}}</span>
+          <span v-else-if="language==2">{{send&&arr[index]?'成功':'待上传'}}</span>
+          <span v-else-if="language==3">{{send&&arr[index]?'成功':'待上傳'}}</span>
+          <span v-else>{{send&&arr[index]?'sucesso':'Para ser carregado'}}</span>
+        </div>
+      </div>
+      <div v-if="fileList.length==0" style="padding: 18px;text-align:center;color:rgba(0, 0, 0, 0.6)">
+        {{language==1?'No files':language==2?'暂无文件':language==3?'暫無文件':'Sem arquivos'}}</div>
+    </div>
+  </div>
+</body>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      language: 1,
+      fileList: [],
+      arr: [],
+      checked: false,
+      toast: false,
+      send: false,
+      percent: 0
+    },
+    mounted() {
+    },
+    watch: {
+      checked() {
+        if (this.checked == true) {
+          this.arr.forEach(ele => {
+            ele = true;
+          })
+        }
+      }
+    },
+    methods: {
+      check() {
+        this.checked = !this.checked;
+        if (this.checked == true) {
+          this.arr.forEach((ele, index) => {
+            let selected = document.getElementById(`selected${index}`)
+            let select = document.getElementById(`select${index}`)
+            ele = true
+            selected.style.display = 'block'
+            select.style.display = 'none'
+          })
+        }
+      },
+      F_Open_dialog() {
+        document.getElementById("btn_file").click();
+      },
+      F_Open_submit() {
+        let arr = []
+        this.arr.forEach(ele => {
+          if (ele == true) {
+            arr.push(true)
+          }
+        })
+        if (arr.length > 0) {
+          let fileList = []
+          this.fileList.forEach((ele, index) => {
+            if (this.arr[index] == true) {
+              fileList.push(ele)
+            }
+          })
+          // document.getElementById("submit").click();
+          //创建formdata对象
+          var formdata = new FormData();
+          fileList.forEach(ele => {
+            formdata.append("file", ele);
+          })
+          //创建xhr，使用ajax进行文件上传
+          var xhr = new XMLHttpRequest();
+          xhr.open("post", "/upload.html");
+          //回调
+          xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              // document.querySelector("#callback").innerText = xhr.responseText;
+              this.send = true;
+              this.toast = true
+            }
+          }
+          // 获取上传的进度
+          xhr.upload.onprogress = (event) => {
+            if (event.lengthComputable) {
+              this.percent = event.loaded / event.total * 100;
+            }
+          }
+          xhr.send(formdata);
+        }
+      },
+      change() {
+        var test = document.getElementById('btn_file');
+        this.fileList = [...this.fileList, ...test.files];
+        this.fileList.forEach(ele => {
+          this.arr.push(true)
+        })
+        this.checked = true;
+      },
+      choose(index, e) {
+        let selected = document.getElementById(`selected${index}`)
+        let select = document.getElementById(`select${index}`)
+        this.arr[index] = e;
+        if (e == false) {
+          selected.style.display = 'none'
+          select.style.display = 'block'
+          this.checked = false;
+        } else {
+          selected.style.display = 'block'
+          select.style.display = 'none'
+        }
+      }
+    }
+  })
+</script>
+
+</html>
